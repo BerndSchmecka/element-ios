@@ -244,7 +244,7 @@
     [super viewWillAppear:animated];
 
     // Screen tracking
-    [Analytics.shared trackScreen:@"RoomMemberDetails"];
+    [Analytics.shared trackScreen:AnalyticsScreenUser];
 
     [self userInterfaceThemeDidChange];
 
