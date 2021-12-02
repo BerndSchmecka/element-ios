@@ -102,6 +102,8 @@
 
 @property(nonatomic, strong) UserVerificationCoordinatorBridgePresenter *userVerificationCoordinatorBridgePresenter;
 
+@property(nonatomic) AnalyticsScreenTimer *screenTimer;
+
 @end
 
 @implementation RoomMemberDetailsViewController
@@ -137,6 +139,8 @@
     
     // Keep visible the status bar by default.
     isStatusBarHidden = NO;
+    
+    self.screenTimer = [[AnalyticsScreenTimer alloc] initWithScreen:AnalyticsScreenUser];
 }
 
 - (void)viewDidLoad
@@ -243,9 +247,6 @@
 {
     [super viewWillAppear:animated];
 
-    // Screen tracking
-    [Analytics.shared trackScreen:AnalyticsScreenUser];
-
     [self userInterfaceThemeDidChange];
 
     // Hide the bottom border of the navigation bar to display the expander header
@@ -266,6 +267,18 @@
     [self hideNavigationBarBorder:NO];
     
     self.bottomImageView.hidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.screenTimer start];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.screenTimer stop];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator
