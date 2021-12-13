@@ -2182,7 +2182,7 @@
         NSString* textMessage;
         if ([msgtype isEqualToString:kMXMessageTypeText])
         {
-            textMessage = event.content[@"body"];
+            textMessage = event.content[kMXMessageBodyKey];
         }
         
         // Show a confirmation popup to the end user
